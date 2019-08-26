@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Shopping</title>
+   
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+
+    <%= csrf_meta_tags %>
+  </head>
+
+ <body class='<%= controller.controller_name %>'>
+  <div id="banner">
+    <%= image_tag("/images/logo.png", width:'70', height: '60',  :class => "logo_image") %>
+    <%= @page_title || "Our Products" %>
+  </div>
+  
+  <div id="columns">
+    <div id="side">
+      <!--div style=“color:yellow”>
+          <h1>testing ajax again</h1>
+      </div-->
+
+      <div>
+        <%= form_tag("/search", method: "get") do %> 
+              <h1>Search information </h1>
+              <p>   
+                 <%= label_tag(:keyword) %>
+                 <%= text_field_tag(:keyword, '', size: 20) %>
+               </p>
+                 <%= label_tag(:price_from) %>
+                 <%= text_field_tag(:from,'', size: 8, placeholder: 'optional') %>
+                
+                <%= label_tag(:price_to) %>
+                 <%= text_field_tag(:to,'', size: 8, placeholder: 'optional') %>              
+                <p> <%= submit_tag("Search") %> </p>
+               
+            <% end %>
+
+         </form>
+
+      </div>
+
+
+      <div id="cart">
+          <%= render @cart %>
+      </div>
+
+      <ul><!--%= link_to 'Home', shopper_path %></li-->
+        <li><a href="/">Home</a></li>
+        <li><%= link_to 'Questions', questions_path %></li>
+        <li><%= link_to 'News', news_path %></li>
+        <li><%= link_to 'Contact us', contact_path %></li>
+      </ul> 
+
+      <% if session[:user_id] %>
+      <ul>
+        <li><%= link_to 'Orders', orders_path %></li>
+        <li><%= link_to 'Products', products_path %></li>
+        <li><%= link_to 'Users', users_path %></li>
+      </ul>
+      <%= button_to 'Logout', logout_path, method: :delete %>
+
+      <% end %>
+
+    </div>
+     
+    <div id="main">
+
+    </div> 
+        <%= yield %>
+    </div>
+</div>
+</body>
+
+</html>
